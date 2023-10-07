@@ -70,18 +70,6 @@ DELETE /livros/{id}
 - [ ] Como um usuário do sistema, devo ser capaz de editar o titulo e o autor do livro.
 - [ ] Como um usuário do sistema, devo ser capaz de excluir um livro.
 
-
-
-
-
-
-
-
-
-
-
-
-
 ### 2.2. Versão 1.1.0
 
 - [ ] Como um usuário do sistema, devo obter a mensagem "Livro {identificador do livro} não encontrado" quando buscar por um livro que não esteja cadastrado.
