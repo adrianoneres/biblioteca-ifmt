@@ -1,6 +1,6 @@
-# Livraria IFMT
+# Biblioteca IFMT
 
-Livraria IFMT é uma API desenvolvida em Java com SpringBoot, para fins didáticos, durante a Pós-graduação em Engenharia DevOps.
+Biblioteca IFMT é uma API desenvolvida em Java com SpringBoot, para fins didáticos, durante a Pós-graduação em Engenharia DevOps.
 
 ## 1. Endpoints
 
