@@ -2,10 +2,16 @@ package br.edu.biblioteca.entities;
 
 import java.util.UUID;
 
+import jakarta.validation.constraints.NotEmpty;
+
 // POJO - Plain Old Java Object
 public class Livro {
   private String id;
+
+  @NotEmpty
   private String titulo;
+
+  @NotEmpty
   private String autor;
 
   public Livro() {

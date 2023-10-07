@@ -2,25 +2,62 @@ package br.edu.biblioteca.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.biblioteca.entities.Livro;
+import br.edu.biblioteca.services.LivrosService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/livros")
 public class LivrosController {
 
-  List<Livro> listaLivros = new ArrayList<>();
+  private final LivrosService livrosService;
+
+  public LivrosController(LivrosService livrosService) {
+    this.livrosService = livrosService;
+  }
 
   @PostMapping
-  public ResponseEntity criar(@RequestBody Livro novoLivro) {
-    listaLivros.add(novoLivro);
-    return ResponseEntity.status(201).body(novoLivro);
+  public ResponseEntity<Livro> criar(@RequestBody @Valid Livro novoLivro) {
+    Livro livro = livrosService.criarLivro(novoLivro);
+    return ResponseEntity.status(201).body(livro);
+  }
+
+  @GetMapping
+  public ResponseEntity<List<Livro>> listar() {
+    List<Livro> listaLivros = livrosService.listarLivros();
+    return ResponseEntity.status(200).body(listaLivros);
   }
   
+  @GetMapping("/{id}")
+  public ResponseEntity<Livro> buscar(@PathVariable String id) {
+    Livro livro = livrosService.buscarLivro(id);
+    return ResponseEntity.status(200).body(livro);
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<Livro> editar(
+    @PathVariable String id, 
+    @RequestBody Livro livroEditado
+  ) {
+    Livro livroSelecionado = livrosService.editarLivro(id, livroEditado);
+    return ResponseEntity.status(200).body(livroSelecionado);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity excluir(@PathVariable String id) {
+    livrosService.excluirLivro(id);
+    return ResponseEntity.status(204).build();
+  }
 }
