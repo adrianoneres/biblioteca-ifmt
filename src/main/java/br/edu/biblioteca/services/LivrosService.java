@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.edu.biblioteca.entities.Livro;
@@ -31,7 +30,7 @@ public class LivrosService {
       .findFirst();
 
     if (!livroSelecionado.isPresent()) {
-      throw new RegistroNaoEncontradoException("Livro com o id " + id + " não foi encontrado.");
+      throw new RegistroNaoEncontradoException("erro.registroNaoEncontradoComId", id);
     }
 
     return livroSelecionado.get();
