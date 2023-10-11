@@ -10,6 +10,23 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - 5433:5432
+    networks: 
+      - biblioteca-network
+  pgadmin:
+    container_name: pgadmin
+    image: docker.io/dpage/pgadmin4:7.7
+    environment:
+      PGADMIN_DEFAULT_EMAIL: email@email.com
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+    ports:
+      - 15433:80
+    depends_on:
+      - postgresql
+    networks: 
+      - biblioteca-network
+networks:
+  biblioteca-network:
+    driver: bridge
 volumes:
   postgresql:
     external: true

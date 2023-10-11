@@ -69,3 +69,8 @@ DELETE /livros/{id}
 - [x] Como um usuário do sistema, devo ser capaz de buscar um livro pelo seu identificador.
 - [x] Como um usuário do sistema, devo ser capaz de editar o titulo e o autor do livro.
 - [x] Como um usuário do sistema, devo ser capaz de excluir um livro.
+
+### 2.2. Versão 1.1.0
+
+- [ ] Como um usuário do sistema, devo ser capaz de listar livros por título.
+- [ ] Como um usuário do sistema, não devo ser capaz de cadastrar dois livros com o mesmo título e autor.
