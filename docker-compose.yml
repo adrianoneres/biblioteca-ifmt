@@ -3,7 +3,7 @@ version: '3.1'
 services:
   postgresql:
     container_name: postgresql
-    image: postgres:14.2
+    image: docker.io/postgres:14.2
     restart: always
     environment:
       POSTGRES_USER: postgres
