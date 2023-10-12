@@ -2,10 +2,17 @@ package br.edu.biblioteca.entities;
 
 import java.util.UUID;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 
 // POJO - Plain Old Java Object
+@Entity
+@Table(name = "livros")
 public class Livro {
+
+  @Id
   private String id;
 
   @NotEmpty

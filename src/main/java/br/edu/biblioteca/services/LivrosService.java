@@ -1,61 +1,57 @@
 package br.edu.biblioteca.services;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import br.edu.biblioteca.entities.Livro;
 import br.edu.biblioteca.exceptions.RegistroNaoEncontradoException;
+import br.edu.biblioteca.repositories.LivrosRepository;
 
 @Service
 public class LivrosService {
 
-  List<Livro> listaLivros = new ArrayList<>();
+  private final LivrosRepository livrosRepository;
+  
+  public LivrosService(LivrosRepository livrosRepository) {
+    this.livrosRepository = livrosRepository;
+  }
 
   public Livro criarLivro(Livro novoLivro) {
-    listaLivros.add(novoLivro);
+    livrosRepository.save(novoLivro);
     return novoLivro;
   }
 
-  public List<Livro> listarLivros() {
-    return listaLivros;
+  public List<Livro> listarLivros(String filtro) {
+    return livrosRepository.findAllByTituloContainingIgnoreCase(filtro);
   }
 
   public Livro buscarLivro(String id) {
-    Optional<Livro> livroSelecionado = listaLivros
-      .stream()
-      .filter(item -> item.getId().equals(id))
-      .findFirst();
+    Livro livro = livrosRepository
+      .findById(id)
+      .orElseThrow(() -> new RegistroNaoEncontradoException("erro.registroNaoEncontradoComId", id));
 
-    if (!livroSelecionado.isPresent()) {
-      throw new RegistroNaoEncontradoException("erro.registroNaoEncontradoComId", id);
-    }
-
-    return livroSelecionado.get();
+    return livro;
   }
   
   public Livro editarLivro(String id, Livro livroEditado) {
-    Optional<Livro> livroSelecionado = listaLivros
-      .stream()
-      .filter(item -> item.getId().equals(id))
-      .findFirst();
+    Livro livroSelecionado = livrosRepository
+      .findById(id)
+      .orElseThrow(() -> new RegistroNaoEncontradoException("erro.registroNaoEncontradoComId", id));
 
-    if (!livroSelecionado.isPresent()) {
-      return null;
-    }
+    livroSelecionado.setTitulo(livroEditado.getTitulo());
+    livroSelecionado.setAutor(livroEditado.getAutor());
 
-    livroSelecionado.get().setTitulo(livroEditado.getTitulo());
-    livroSelecionado.get().setAutor(livroEditado.getAutor());
+    livrosRepository.save(livroSelecionado);
 
-    return livroSelecionado.get();
+    return livroSelecionado;
   }
 
   public void excluirLivro(String id) {
-    listaLivros = listaLivros
-      .stream()
-      .filter(item -> !item.getId().equals(id))
-      .toList();
+    Livro livro = livrosRepository
+      .findById(id)
+      .orElseThrow(() -> new RegistroNaoEncontradoException("erro.registroNaoEncontradoComId", id));
+
+    livrosRepository.delete(livro);
   }
 }
