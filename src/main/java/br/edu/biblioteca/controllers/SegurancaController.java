@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.biblioteca.entities.Login;
 import br.edu.biblioteca.entities.Usuario;
 import br.edu.biblioteca.services.TokenService;
 
@@ -25,7 +26,7 @@ public class SegurancaController {
   }  
 
   @PostMapping("/login")
-  public ResponseEntity<String> login(@RequestBody Usuario body) {
+  public ResponseEntity<Login> login(@RequestBody Usuario body) {
     UsernamePasswordAuthenticationToken authenticationToken = 
       new UsernamePasswordAuthenticationToken(body.getNomeUsuario(), body.getSenha());
 
@@ -34,7 +35,7 @@ public class SegurancaController {
     Usuario usuario = (Usuario) authentication.getPrincipal();
     String token = tokenService.gerarToken(usuario);
 
-    return ResponseEntity.ok().body(token);
+    return ResponseEntity.ok().body(new Login(token));
   }
   
 }

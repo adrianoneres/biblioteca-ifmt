@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.auth0.jwt.exceptions.JWTDecodeException;
+
 import br.edu.biblioteca.entities.Erro;
 
 @RestControllerAdvice
@@ -30,6 +32,22 @@ public class ResourceExceptionHandler {
     String chave = exception.getMessage();
     String[] argumentos = exception.getArgumentos();
     String mensagem = messageSource.getMessage(chave, argumentos, locale);
+    return new Erro(mensagem);
+  }
+
+  @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
+  @ExceptionHandler(NaoAutorizadoException.class)
+  public Erro tratarExcecao(NaoAutorizadoException exception, Locale locale) {
+    String chave = exception.getMessage();
+    String mensagem = messageSource.getMessage(chave, null, locale);
+    return new Erro(mensagem);
+  }
+
+  @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
+  @ExceptionHandler(JWTDecodeException.class)
+  public Erro tratarExcecao(JWTDecodeException exception, Locale locale) {
+    String chave = "erro.naoAutorizado";
+    String mensagem = messageSource.getMessage(chave, null, locale);
     return new Erro(mensagem);
   }
   

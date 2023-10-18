@@ -28,4 +28,12 @@ public class TokenService {
   private Instant segundosNoFuturo(long segundos) {
     return LocalDateTime.now().plusSeconds(segundos).atZone(ZoneId.of("-04:00")).toInstant();
   }
+
+  public String validarEObterSubject(String token) {
+    return JWT.require(Algorithm.HMAC256(SECRET))
+              .withIssuer("biblioteca-ifmt")
+              .build()
+              .verify(token)
+              .getSubject();
+  }
 }
