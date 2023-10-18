@@ -55,7 +55,7 @@ public class LivrosController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity excluir(@PathVariable String id) {
+  public ResponseEntity<Void> excluir(@PathVariable String id) {
     livrosService.excluirLivro(id);
     return ResponseEntity.status(204).build();
   }

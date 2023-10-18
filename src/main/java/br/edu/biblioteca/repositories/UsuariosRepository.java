@@ -7,6 +7,5 @@ import br.edu.biblioteca.entities.Usuario;
 
 @Repository
 public interface UsuariosRepository extends JpaRepository<Usuario, String> {
-
   Usuario findByNomeUsuario(String nomeUsuario);
 }

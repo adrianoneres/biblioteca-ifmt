@@ -26,7 +26,8 @@ public class SegurancaController {
 
   @PostMapping("/login")
   public ResponseEntity<String> login(@RequestBody Usuario body) {
-    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(body.getNomeUsuario(), body.getSenha());
+    UsernamePasswordAuthenticationToken authenticationToken = 
+      new UsernamePasswordAuthenticationToken(body.getNomeUsuario(), body.getSenha());
 
     Authentication authentication = authenticationManager.authenticate(authenticationToken);
 

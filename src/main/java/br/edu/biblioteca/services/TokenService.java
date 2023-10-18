@@ -1,6 +1,8 @@
 package br.edu.biblioteca.services;
 
-import java.util.Date;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import org.springframework.stereotype.Service;
 
@@ -12,12 +14,18 @@ import br.edu.biblioteca.entities.Usuario;
 @Service
 public class TokenService {
 
+  private final static String SECRET = "segredo";
+
   public String gerarToken(Usuario usuario) {
     return JWT.create()
               .withIssuer("biblioteca-ifmt")
               .withSubject(usuario.getId())
               .withClaim("nome", usuario.getNomeUsuario())
-              .withExpiresAt(new Date())
-              .sign(Algorithm.HMAC256("segredo"));
+              .withExpiresAt(minutosNoFuturo(120))
+              .sign(Algorithm.HMAC256(SECRET));
+  }
+
+  private Instant minutosNoFuturo(long minutos) {
+    return LocalDateTime.now().plusMinutes(minutos).atZone(ZoneId.systemDefault()).toInstant();
   }
 }
