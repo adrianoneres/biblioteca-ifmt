@@ -21,11 +21,11 @@ public class TokenService {
               .withIssuer("biblioteca-ifmt")
               .withSubject(usuario.getId())
               .withClaim("nome", usuario.getNomeUsuario())
-              .withExpiresAt(minutosNoFuturo(120))
+              .withExpiresAt(segundosNoFuturo(3600))
               .sign(Algorithm.HMAC256(SECRET));
   }
 
-  private Instant minutosNoFuturo(long minutos) {
-    return LocalDateTime.now().plusMinutes(minutos).atZone(ZoneId.systemDefault()).toInstant();
+  private Instant segundosNoFuturo(long segundos) {
+    return LocalDateTime.now().plusSeconds(segundos).atZone(ZoneId.of("-04:00")).toInstant();
   }
 }
