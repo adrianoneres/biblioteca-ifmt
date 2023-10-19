@@ -43,6 +43,14 @@ public class ResourceExceptionHandler {
     return new Erro(mensagem);
   }
 
+  @ResponseStatus(code = HttpStatus.UNPROCESSABLE_ENTITY)
+  @ExceptionHandler(NegocioException.class)
+  public Erro tratarExcecao(NegocioException exception, Locale locale) {
+    String chave = exception.getMessage();
+    String mensagem = messageSource.getMessage(chave, null, locale);
+    return new Erro(mensagem);
+  }
+
   @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
   @ExceptionHandler(JWTDecodeException.class)
   public Erro tratarExcecao(JWTDecodeException exception, Locale locale) {
