@@ -89,8 +89,8 @@ DELETE /livros/{id}
       "perfil": "ADMIN"
     }
   ```
-- [ ] Como um administrador do sistema, devo ser capaz de obter todos os usuários de um perfil pelo endpoint `admin/perfis/{id-perfil}`
-  - [ ] Bônus: Os dados do perfil devem ser retornados no seguinte padrão:
+- [x] Como um administrador do sistema, devo ser capaz de obter todos os usuários de um perfil pelo endpoint `admin/perfis/{id-perfil}`
+  - [x] Bônus: Os dados do perfil devem ser retornados no seguinte padrão:
   ```json
     {
       "id": "711917da-d066-4b52-a82c-c823667de2ba",
