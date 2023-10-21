@@ -9,7 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -26,6 +29,12 @@ public class Usuario implements UserDetails {
 
   @NotEmpty
   private String senha;
+
+  @ManyToOne
+  @JoinColumn(name = "id_perfil", 
+              referencedColumnName = "id",
+              foreignKey = @ForeignKey(name = "fk_usuario_perfil"))
+  private Perfil perfil;
 
   public String getId() {
     return this.id;
@@ -53,7 +62,8 @@ public class Usuario implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return List.of(new SimpleGrantedAuthority("USER"));
+    String nomePerfil = this.perfil != null ? "ROLE_" + this.perfil.getNome() : "ROLE_USER";
+    return List.of(new SimpleGrantedAuthority(nomePerfil));
   }
 
   @Override

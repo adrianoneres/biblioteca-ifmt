@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.biblioteca.entities.Livro;
 import br.edu.biblioteca.services.LivrosService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 
 @RestController
@@ -39,6 +40,7 @@ public class LivrosController {
     return ResponseEntity.status(200).body(listaLivros);
   }
   
+  @RolesAllowed("ADMIN")
   @GetMapping("/{id}")
   public ResponseEntity<Livro> buscar(@PathVariable String id) {
     Livro livro = livrosService.buscarLivro(id);
