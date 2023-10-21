@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.edu.biblioteca.entities.Usuario;
 import br.edu.biblioteca.exceptions.NegocioException;
+import br.edu.biblioteca.exceptions.RegistroNaoEncontradoException;
 import br.edu.biblioteca.repositories.UsuariosRepository;
 
 @Service
@@ -39,5 +40,13 @@ public class AutenticacaoService implements UserDetailsService {
     usuario.setId(UUID.randomUUID().toString());
 
     usuariosRepository.save(usuario);
+  }
+
+  public Usuario buscarUsuarioPorId(String id) {
+    Usuario usuario = usuariosRepository
+      .findById(id)
+      .orElseThrow(() -> new RegistroNaoEncontradoException());
+
+      return usuario;
   }
 }

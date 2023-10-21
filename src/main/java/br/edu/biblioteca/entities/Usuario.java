@@ -96,4 +96,7 @@ public class Usuario implements UserDetails {
     return true;
   }
   
+  public Perfil getPerfil() {
+    return this.perfil;
+  }
 }
