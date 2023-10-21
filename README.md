@@ -72,8 +72,8 @@ DELETE /livros/{id}
 
 ### 2.2. Versão 1.1.0
 
-- [ ] Como um usuário do sistema, devo ser capaz de cadastrar um usuário informando nome de usuário e senha.
+- [x] Como um usuário do sistema, devo ser capaz de cadastrar um usuário informando nome de usuário e senha.
   - **Critérios de aceitação:**
-    - [ ] Não deve ser possível cadastrar um usuário com o mesmo nome de usuário de outro já cadastrado.
-    - [ ] Ao cadastrar um usuário, sua senha deve ser criptografada antes de ser salva no banco de dados.
-    - [ ] Deve ser possível efetuar o login com o novo usuário cadastrado.
+    - [x] Não deve ser possível cadastrar um usuário com o mesmo nome de usuário de outro já cadastrado.
+    - [x] Ao cadastrar um usuário, sua senha deve ser criptografada antes de ser salva no banco de dados.
+    - [x] Deve ser possível efetuar o login com o novo usuário cadastrado.
