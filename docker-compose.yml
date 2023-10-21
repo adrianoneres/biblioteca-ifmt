@@ -12,6 +12,8 @@ services:
       - 5433:5432
     networks: 
       - biblioteca-network
+    volumes:
+      - postgresql:/var/lib/postgresql/data
   pgadmin:
     container_name: pgadmin
     image: docker.io/dpage/pgadmin4:7.7
@@ -23,6 +25,17 @@ services:
     depends_on:
       - postgresql
     networks: 
+      - biblioteca-network
+  biblioteca-api:
+    container_name: biblioteca-api
+    image: biblioteca-api
+    environment:
+      - DATABASE_URL=jdbc:postgresql://postgresql:5432/biblioteca-ifmt
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgresql
+    networks:
       - biblioteca-network
 networks:
   biblioteca-network:
