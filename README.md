@@ -77,3 +77,24 @@ DELETE /livros/{id}
     - [x] Não deve ser possível cadastrar um usuário com o mesmo nome de usuário de outro já cadastrado.
     - [x] Ao cadastrar um usuário, sua senha deve ser criptografada antes de ser salva no banco de dados.
     - [x] Deve ser possível efetuar o login com o novo usuário cadastrado.
+
+### 2.3. Versão 1.2.0
+
+- [ ] Como um administrador do sistema, devo ser capaz de obter os dados do usuário pelo endpoint `/admin/usuarios/{id-usuario}`
+  - [ ] Bônus: Os dados do usuário devem ser retornados no seguinte padrão:
+  ```json
+    {
+      "id": "e2550bf9-d644-4758-baa5-e047b0379c00",
+      "nomeUsuario": "teste",
+      "perfil": "ADMIN"
+    }
+  ```
+- [ ] Como um administrador do sistema, devo ser capaz de obter todos os usuários de um perfil pelo endpoint `admin/perfis/{id-perfil}`
+  - [ ] Bônus: Os dados do perfil devem ser retornados no seguinte padrão:
+  ```json
+    {
+      "id": "711917da-d066-4b52-a82c-c823667de2ba",
+      "nome": "ADMIN",
+      "usuarios": ["teste", "tiao"]
+	  },
+  ```
