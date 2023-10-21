@@ -80,8 +80,8 @@ DELETE /livros/{id}
 
 ### 2.3. Versão 1.2.0
 
-- [ ] Como um administrador do sistema, devo ser capaz de obter os dados do usuário pelo endpoint `/admin/usuarios/{id-usuario}`
-  - [ ] Bônus: Os dados do usuário devem ser retornados no seguinte padrão:
+- [x] Como um administrador do sistema, devo ser capaz de obter os dados do usuário pelo endpoint `/admin/usuarios/{id-usuario}`
+  - [x] Bônus: Os dados do usuário devem ser retornados no seguinte padrão:
   ```json
     {
       "id": "e2550bf9-d644-4758-baa5-e047b0379c00",
