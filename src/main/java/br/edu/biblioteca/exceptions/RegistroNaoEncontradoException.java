@@ -4,7 +4,7 @@ public class RegistroNaoEncontradoException extends RuntimeException {
   private String[] argumentos;
 
   public RegistroNaoEncontradoException() {
-    super("Registro não encontrado.");
+    super("erro.registroNaoEncontrado");
   }
 
   public RegistroNaoEncontradoException(String mensagem) {
