@@ -8,6 +8,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: biblioteca-ifmt
     ports:
       - 5433:5432
     networks: 
@@ -26,17 +27,17 @@ services:
       - postgresql
     networks: 
       - biblioteca-network
-  biblioteca-api:
-    container_name: biblioteca-api
-    image: biblioteca-api
-    environment:
-      - DATABASE_URL=jdbc:postgresql://postgresql:5432/biblioteca-ifmt
-    ports:
-      - 8080:8080
-    depends_on:
-      - postgresql
-    networks:
-      - biblioteca-network
+  # biblioteca-api:
+  #   container_name: biblioteca-api
+  #   image: biblioteca-api
+  #   environment:
+  #     - DATABASE_URL=jdbc:postgresql://postgresql:5432/biblioteca-ifmt
+  #   ports:
+  #     - 8080:8080
+  #   depends_on:
+  #     - postgresql
+  #   networks:
+  #     - biblioteca-network
 networks:
   biblioteca-network:
     driver: bridge
