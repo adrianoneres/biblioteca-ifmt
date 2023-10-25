@@ -40,7 +40,7 @@ public class LivrosController {
     return ResponseEntity.status(200).body(listaLivros);
   }
   
-  @RolesAllowed("ADMIN")
+  @RolesAllowed("USER")
   @GetMapping("/{id}")
   public ResponseEntity<Livro> buscar(@PathVariable String id) {
     Livro livro = livrosService.buscarLivro(id);
