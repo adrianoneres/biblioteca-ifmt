@@ -28,6 +28,17 @@ public class LivrosServiceTest {
   }
 
   @Test
+  public void deveIncluirUmNovoLivro() {
+    Livro livro = new Livro("O Senhor dos Anéis - A Sociedade do Anel", "J. R. R. Tolkien");
+    
+    livrosService.criarLivro(livro);
+
+    Livro livroCadastrado = livrosRepository.findById(livro.getId()).get();
+
+    Assertions.assertNotNull(livroCadastrado);
+  }
+
+  @Test
   public void deveListarTodosOsLivros() {
     // Given - pré-condições
     Livro livro = new Livro("Hamlet", "William Shakespeare");
