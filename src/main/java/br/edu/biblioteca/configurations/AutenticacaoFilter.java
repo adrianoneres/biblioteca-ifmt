@@ -39,7 +39,10 @@ public class AutenticacaoFilter extends OncePerRequestFilter {
     try {
       // 1 - Verificar se a rota exige autenticação:
       String contexto = request.getServletPath();
-      Boolean exigeAutenticacao = !contexto.startsWith("/seguranca");
+      Boolean exigeAutenticacao = 
+        !contexto.startsWith("/seguranca") && 
+        !contexto.startsWith("/swagger-ui") &&
+        !contexto.startsWith("/v3/api-docs");
 
       if (exigeAutenticacao) {
         // 2 - Recuperar o token do cabeçalho "Authorization":

@@ -24,6 +24,8 @@ public class BibliotecaConfigurations {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http.authorizeHttpRequests(auth -> {
       auth.requestMatchers("/seguranca/**").permitAll();
+      auth.requestMatchers("/swagger-ui/**").permitAll();
+      auth.requestMatchers("/v3/api-docs/**").permitAll();
       auth.anyRequest().authenticated();
     })
     .csrf(csrf -> csrf.disable())

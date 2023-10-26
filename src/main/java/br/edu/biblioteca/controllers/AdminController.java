@@ -13,8 +13,10 @@ import br.edu.biblioteca.dtos.UsuarioResponseDto;
 import br.edu.biblioteca.entities.Perfil;
 import br.edu.biblioteca.entities.Usuario;
 import br.edu.biblioteca.services.AutenticacaoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
 
+@SecurityRequirement(name = "biblioteca-seguranca")
 @RestController
 @RequestMapping("/admin")
 public class AdminController {

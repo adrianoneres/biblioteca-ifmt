@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.biblioteca.entities.Livro;
 import br.edu.biblioteca.services.LivrosService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 
+@SecurityRequirement(name = "biblioteca-seguranca")
 @RestController
 @RequestMapping("/livros")
 public class LivrosController {
@@ -40,6 +43,7 @@ public class LivrosController {
     return ResponseEntity.status(200).body(listaLivros);
   }
   
+  @Operation(summary = "Busca um livro por ID")
   @RolesAllowed("USER")
   @GetMapping("/{id}")
   public ResponseEntity<Livro> buscar(@PathVariable String id) {
