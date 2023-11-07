@@ -1,6 +1,7 @@
 package br.edu.biblioteca.configurations;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,44 +37,51 @@ public class AutenticacaoFilter extends OncePerRequestFilter {
     HttpServletResponse response, 
     FilterChain filterChain
   ) throws ServletException, IOException {
-    try {
-      // 1 - Verificar se a rota exige autenticação:
-      String contexto = request.getServletPath();
-      Boolean exigeAutenticacao = 
+    String metodo = request.getMethod();
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
+
+    if (!metodo.equalsIgnoreCase("OPTIONS")) {
+      try {
+        // 1 - Verificar se a rota exige autenticação:
+        String contexto = request.getServletPath();
+        Boolean exigeAutenticacao = 
         !contexto.startsWith("/seguranca") && 
         !contexto.startsWith("/swagger-ui") &&
         !contexto.startsWith("/v3/api-docs");
-
-      if (exigeAutenticacao) {
-        // 2 - Recuperar o token do cabeçalho "Authorization":
-        String authorizationHeader = request.getHeader("Authorization");
-
-        if (authorizationHeader == null || authorizationHeader.isEmpty()) {
-          throw new NaoAutorizadoException();
-        }
-
-        // 3 - Separar a palavra "Bearer" do Token JWT e validar somente o token:
-        String token = authorizationHeader.replace("Bearer ", "");
         
-        // 4 - Verificar se o valor do cabeçalho é um token JWT válido:
-        String subject = tokenService.validarEObterSubject(token);
-        
-        // 5 - Verificar o "subject" contém um identificar válido de um usuário:
-        Usuario usuario = usuariosRepository
+        if (exigeAutenticacao) {
+          // 2 - Recuperar o token do cabeçalho "Authorization":
+          String authorizationHeader = request.getHeader("Authorization");
+          
+          if (authorizationHeader == null || authorizationHeader.isEmpty()) {
+            // throw new NaoAutorizadoException();
+          }
+          
+          // 3 - Separar a palavra "Bearer" do Token JWT e validar somente o token:
+          String token = authorizationHeader.replace("Bearer ", "");
+          
+          // 4 - Verificar se o valor do cabeçalho é um token JWT válido:
+          String subject = tokenService.validarEObterSubject(token);
+          
+          // 5 - Verificar o "subject" contém um identificar válido de um usuário:
+          Usuario usuario = usuariosRepository
           .findById(subject)
           .orElseThrow(() -> new NaoAutorizadoException());
-
-        // 6 - Montar o objeto de autenticação e delegar a validação para o Spring Boot:
-        UsernamePasswordAuthenticationToken authenticationToken = 
+          
+          // 6 - Montar o objeto de autenticação e delegar a validação para o Spring Boot:
+          UsernamePasswordAuthenticationToken authenticationToken = 
           new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
-
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+          
+          SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        }
+        
+        filterChain.doFilter(request, response);
+      } catch (Exception exception) {
+        handlerExceptionResolver.resolveException(request, response, null, exception);
       }
-
-      filterChain.doFilter(request, response);
-    } catch (Exception exception) {
-      handlerExceptionResolver.resolveException(request, response, null, exception);
+    } else {
+      response.setStatus(HttpServletResponse.SC_OK);
     }
   }
-  
 }
