@@ -38,6 +38,15 @@ services:
       - postgresql
     networks:
       - biblioteca-network
+  biblioteca-web:
+    container_name: biblioteca-web
+    image: biblioteca-web
+    ports:
+      - 80:80
+    depends_on:
+      - biblioteca-api
+    networks:
+      - biblioteca-network
 networks:
   biblioteca-network:
     driver: bridge

@@ -40,6 +40,9 @@ public class AutenticacaoFilter extends OncePerRequestFilter {
     String metodo = request.getMethod();
     response.setHeader("Access-Control-Allow-Origin", "*");
     response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
+    response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+    response.setHeader("Access-Control-Max-Age", "3600");
+    response.setHeader("Access-Control-Allow-Credentials", "true");
 
     if (!metodo.equalsIgnoreCase("OPTIONS")) {
       try {
@@ -81,6 +84,10 @@ public class AutenticacaoFilter extends OncePerRequestFilter {
         handlerExceptionResolver.resolveException(request, response, null, exception);
       }
     } else {
+      response.setHeader("Access-Control-Allow-Methods", "POST,GET,DELETE");
+      response.setHeader("Access-Control-Max-Age", "3600");
+      response.setHeader("Access-Control-Allow-Headers", "authorization, content-type," +
+              "access-control-request-headers,access-control-request-method,accept,origin,authorization,x-requested-with");
       response.setStatus(HttpServletResponse.SC_OK);
     }
   }
